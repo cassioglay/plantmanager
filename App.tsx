@@ -1,4 +1,5 @@
 import React from "react";
+import { Confirmation } from "./src/pages/Confirmation";
 import { UserIdentification } from "./src/pages/UserIdentification";
 import AppLoading from "expo-app-loading";
 

@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     lineHeight: 32,
-    fontWeight: "bold",
     textAlign: "center",
     color: colors.heading,
     fontFamily: fonts.heading,
