@@ -8,10 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/core";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Button } from "../components/Button";
 
@@ -19,29 +22,31 @@ import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 
 export function UserIdentification() {
-
-	const [isFocused, setIsFocused] = useState(false);
-	const [isFilled, setIsFilled] = useState(false);
-	const [name, setName] = useState<string>();
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+  const [name, setName] = useState<string>();
 
   const navigation = useNavigation();
 
-	function handleInputBlur(){
-		setIsFocused(false);
-		setIsFilled(!!name);
-	}
+  function handleInputBlur() {
+    setIsFocused(false);
+    setIsFilled(!!name);
+  }
 
-	function handleInputFocus(){
-		setIsFocused(true);
-	}
+  function handleInputFocus() {
+    setIsFocused(true);
+  }
 
-	function handleInputChange(value:string){
-		setIsFilled(!!value);
-		setName(value);
-	}
+  function handleInputChange(value: string) {
+    setIsFilled(!!value);
+    setName(value);
+  }
 
-  
-  function handleSubmit(){
+  async function handleSubmit() {
+    if (!name) return Alert.alert("Me diz como posso chamar você 😢");
+
+  await AsyncStorage.setItem("@plantmanager:user", name);
+
     navigation.navigate("Confirmation");
   }
   return (
@@ -54,30 +59,24 @@ export function UserIdentification() {
           <View style={styles.content}>
             <View style={styles.form}>
               <View style={styles.header}>
-                <Text style={styles.emoji}>
-                  {isFilled ? '😄' : '😀'}
-                  </Text>
+                <Text style={styles.emoji}>{isFilled ? "😄" : "😀"}</Text>
                 <Text style={styles.title}>
                   Como podemos {"\n"}
                   chamar você?
                 </Text>
               </View>
-              <TextInput 
+              <TextInput
                 style={[
                   styles.input,
-                  (isFocused || isFilled) &&
-                  {borderColor: colors.green}
-                ]} 
+                  (isFocused || isFilled) && { borderColor: colors.green },
+                ]}
                 placeholder="Digite um nome"
                 onBlur={handleInputBlur}
                 onFocus={handleInputFocus}
                 onChangeText={handleInputChange}
-                />
+              />
               <View style={styles.footer}>
-                <Button title="Confirmar"
-                  onPress={handleSubmit}
-
-                />
+                <Button title="Confirmar" onPress={handleSubmit} />
               </View>
             </View>
           </View>
@@ -104,9 +103,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 54,
     alignItems: "center",
   },
-	header:{
-		alignItems: 'center'
-	},
+  header: {
+    alignItems: "center",
+  },
   emoji: {
     fontSize: 44,
   },
