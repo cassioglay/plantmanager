@@ -13,6 +13,7 @@ import { getBottomSpace } from "react-native-iphone-x-helper";
 import { useRoute } from "@react-navigation/core";
 import { SvgFromUri } from "react-native-svg";
 import DateTimePicker, { Event } from "@react-native-community/datetimepicker";
+import { loadPlant, PlantProps, savePlant } from "../libs/storage";
 
 import waterdrop from "../assets/waterdrop.png";
 import { Button } from "../components/Button";
@@ -22,18 +23,7 @@ import { isBefore } from "date-fns";
 import { format } from "date-fns/esm";
 
 interface Params {
-  plant: {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-      times: number;
-      repeat_every: string;
-    };
-  };
+  plant: PlantProps
 }
 
 export function PlantSave() {
@@ -57,6 +47,21 @@ export function PlantSave() {
 
   function handleOpenDateTimeForAndroid() {
     setShowDatePicker((oldState) => !oldState);
+  }
+
+  async function handleSave(){
+    //const data = await loadPlant();
+    //console.log(data);
+    try {
+      
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      });
+
+    } catch {
+      Alert.alert("Error ao tentar salvar a planta 😢");
+    } 
   }
 
   return (
@@ -99,7 +104,7 @@ export function PlantSave() {
           </TouchableOpacity>
         )}
 
-        <Button title="Cadastrar Planta" onPress={() => {}} />
+        <Button title="Cadastrar Planta" onPress={handleSave} />
       </View>
     </View>
   );

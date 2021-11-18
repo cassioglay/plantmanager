@@ -45,9 +45,14 @@ export function UserIdentification() {
   async function handleSubmit() {
     if (!name) return Alert.alert("Me diz como posso chamar você 😢");
 
-  await AsyncStorage.setItem("@plantmanager:user", name);
+    try {
+      await AsyncStorage.setItem("@plantmanager:user", name);
 
-    navigation.navigate("Confirmation");
+      navigation.navigate("Confirmation");
+
+    } catch (error) {
+      Alert.alert("Não foi possível salver o sei nome 😢");
+    }
   }
   return (
     <SafeAreaView style={styles.container}>
