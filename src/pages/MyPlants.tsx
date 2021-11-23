@@ -9,6 +9,7 @@ import { loadPlant, PlantProps } from "../libs/storage";
 import { formatDistance } from "date-fns";
 import { pt } from "date-fns/locale";
 import fonts from "../styles/fonts";
+import { PlantCardSecondary } from "../components/PlantCardSecondary";
 
 export function MyPlants() {
   const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -26,7 +27,7 @@ export function MyPlants() {
       );
 
       setNextWaterd(
-        `Não esqueça de regar a ${plantStoraged[0].name} à ${nextTime} horas`
+        `Não esqueça de regar a ${plantStoraged[0].name} às ${nextTime}`
       );
 
       setMyPlants(plantStoraged);
@@ -45,15 +46,15 @@ export function MyPlants() {
         <Text style={styles.spotlightText}>{nextWaterd}</Text>
       </View>
       <View style={styles.plants}>
-        <Text style={styles.plantsText}>Próximas regadas</Text>
+        <Text style={styles.plantsTitle}>Próximas regadas</Text>
         <FlatList
           data={myPlants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({item}) => (
-            <Text>Elemento</Text>
+           <PlantCardSecondary data={item}/>
           )}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{flex:1}}
+          showsVerticalScrollIndicator={false}
+         style={{flex: 1}}
         />
       </View>
     </View>
@@ -85,15 +86,13 @@ const styles = StyleSheet.create({
   spotlightText: {
     flex: 1,
     color: colors.blue,
-    paddingHorizontal: 20,
-    textAlign: "justify"
-
+    paddingHorizontal: 20
   },
   plants: {
     flex: 1,
     width: "100%"
   },
-  plantsText: {
+  plantsTitle: {
     fontSize: 24,
     fontFamily: fonts.heading,
     color: colors.heading,

@@ -33,21 +33,34 @@ export const PlantCardSecondary = ({ data, ...rest }: PlantProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    maxWidth: "45%",
-    backgroundColor: colors.shape,
-    borderRadius: 20,
-    paddingVertical: 10,
-    alignItems: "center",
-    margin: 10,
+   width: "100%",
+   paddingHorizontal: 10,
+   paddingVertical: 25,
+   borderRadius: 20,
+   flexDirection: "row",
+   alignItems: "center", 
+   backgroundColor: colors.shape, 
+   marginVertical: 5
   },
   title: {
-    color: colors.green_dark,
+    flex: 1,
+    marginLeft: 10,
     fontFamily: fonts.heading,
-    marginVertical: 16,
+    fontSize: 17,
+    color: colors.heading
   },
-	details:{},
-	timeLabel:{},
-	time:{},
-	hour:{}
+	details:{
+    alignItems: "flex-end"
+  },
+	timeLabel:{
+    fontSize: 16,
+    fontFamily: fonts.text,
+    color: colors.body_light
+  },
+	time:{
+    marginTop: 5,
+    fontSize: 16,
+    fontFamily: fonts.heading,
+    color: colors.body_dark
+  }
 });
